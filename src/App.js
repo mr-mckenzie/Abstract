@@ -20,15 +20,30 @@ function App() {
   let minTop = 0
   let maxTop = 0
 
-  for (let i=0; i<3000; i++) {
+  for (let i=1; i<5001; i++) {
+
+    const top = Math.floor(Math.random()*750)
+    const left = Math.floor(Math.random()*1400)
+
+    if (top < 400) {
+      maxHue = 195
+      minHue = 185
+    } else if (i < 4900) {
+      maxHue = 165
+      minHue = 155
+    } else {
+      maxHue = 85
+      minHue = 65
+    }
+
     // if(i>2750){
     // maxHue = Math.floor(55)
     // minHue = Math.ceil(15)}
-    if (i%10 && i>=2950){
-      console.log("change of colour")
-      maxHue = maxHue + 10
-      minHue = minHue + 10
-    }
+    // if (i%10 && i>=4920){
+    //   console.log("change of colour")
+    //   maxHue = maxHue + 1
+    //   minHue = minHue - 1
+    // }
     const randomMaxHue = Math.floor(maxHue)
     const randomMinHue = Math.ceil(minHue)
     const randomHue = Math.floor( Math.random() * (randomMaxHue-randomMinHue) + randomMinHue)
@@ -36,10 +51,7 @@ function App() {
     const maxSat = Math.floor(100);
     const minSat = Math.ceil(70);
     const randomSaturation = Math.floor( Math.random()*(maxSat-minSat) + minSat)
-
     //let randomB = Math.floor( Math.random() * 255)
-    let top = Math.floor(Math.random()*750)
-    let left = Math.floor(Math.random()*750)
     let min = Math.ceil(20);
     let max = Math.floor(30);
     let diameter = Math.floor((Math.random()*(max-min)) + min)
