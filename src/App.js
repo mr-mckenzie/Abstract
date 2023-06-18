@@ -16,6 +16,13 @@ function App() {
   let maxHue = Math.floor( Math.random()*360)
   let minHue = maxHue - 10
 
+  let maxLight = 65
+  let minLight = 55
+
+  const randomMaxlight = Math.floor(maxLight)
+  const randomMinlight = Math.ceil(minLight)
+  const randomlightness = Math.floor( Math.random() * (randomMaxlight - randomMinlight) + randomMinlight)
+
   const minTop = 0
   const maxTop = 750
 
@@ -30,12 +37,16 @@ function App() {
 
     const interval = setInterval(() => {
 
-      if (dotCount%25 === 0) {
+      if (dotCount%20 === 0) {
         top = Math.floor(Math.random()*maxTop)
         left = Math.floor(Math.random()*maxLeft)
-        if (Math.floor(Math.random()*80) === 0) {
-        maxHue = maxHue + 120
-        minHue = maxHue - 10
+
+        if (Math.floor(Math.random()*4) === 0) {
+        maxHue = maxHue +2
+        minHue = minHue +2
+        } else {
+          maxHue = maxHue -1
+          minHue = minHue -1
         }
 
       } else {
@@ -110,19 +121,20 @@ function App() {
       let max = Math.floor(30);
       let diameter = Math.floor((Math.random()*(max-min)) + min)
       
-      setDot( {index: dotCount, hue: randomHue, saturation: randomSaturation, top: top, left: left, diameter: diameter} )
+      setDot( {index: dotCount, hue: randomHue, saturation: randomSaturation, lightness: randomlightness, top: top, left: left, diameter: diameter} )
 
       //add to dot count
       dotCount++
 
+
       //end the loop
-      if (dotCount > 3000) {
+      if (dotCount >= 4000) {
         clearInterval(interval)
       }
 
     }
       
-    ,1);
+    ,20);
 
     return () => clearInterval(interval);
 
@@ -138,7 +150,7 @@ function App() {
     <div className="App">
       <div id='canvas'>
           {[...dots.map( dot => {
-            return <div className='dot' key={dot.key} style={{background: `hsl(${dot.hue} ${dot.saturation}% 50%)`, top: dot.top, left: dot.left, width: dot.diameter, height: dot.diameter}}></div>
+            return <div className='dot' key={dot.key} style={{background: `hsl(${dot.hue} ${dot.saturation}% ${dot.lightness}%)`, top: dot.top, left: dot.left, width: dot.diameter, height: dot.diameter}}></div>
           })]}
         </div>
     </div>
