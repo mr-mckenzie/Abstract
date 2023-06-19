@@ -4,12 +4,8 @@ import { useEffect } from 'react';
 
 function App() {
 
-  const [colour, setColour] = useState("red")
-  const [dotSize, setdotSize] = useState(100)
   const [dot, setDot] = useState({})
   const [dots, setDots] = useState([])
-
-  //let colourArray = ["red", "blue", "yellow"]
 
   const dotArray = []
 
@@ -27,30 +23,37 @@ function App() {
   const maxTop = 750
 
   const minLeft = 0
-  const maxLeft = 1400
+  const maxLeft = 750
 
   let dotCount = 0
   let top = 25
   let left = 25
 
+  let randomDirection = Math.floor(Math.random() * 8)
+
   useEffect(() => {
 
     const interval = setInterval(() => {
 
-      if (dotCount%20 === 0) {
+      if (dotCount%3 === 0) {
+        randomDirection = Math.floor(Math.random() * 8)
+      }
+
+
+      if (dotCount%150 === 0) {
+        
         top = Math.floor(Math.random()*maxTop)
         left = Math.floor(Math.random()*maxLeft)
 
-        if (Math.floor(Math.random()*4) === 0) {
+        if (Math.floor(Math.random()*2) === 0) {
         maxHue = maxHue +2
         minHue = minHue +2
         } else {
-          maxHue = maxHue -1
-          minHue = minHue -1
+          maxHue = maxHue +2
+          minHue = minHue +2
         }
 
-      } else {
-        let randomDirection = Math.floor(Math.random() * 8) 
+      }
 
         if (randomDirection === 0) {
           top = top+15
@@ -75,39 +78,18 @@ function App() {
         }
 
         if (top >= maxTop) {
-          top = top - 15
+          top = minTop + 15
         }
         if (top <= minTop) {
-          top = top + 15
+          top = maxTop - 15
         }
         if (left >= maxLeft) {
-          left = left - 15
+          left = minLeft + 15
         }
         if (left <= minLeft) {
-          left = left + 15
+          left = maxLeft - 15
         }
-      }
-
-
-  
-      // if (top < 250) {
-      //   maxHue = maxHueOne
-      //   minHue = minHueOne
-      // } else if (dotCount >= 4000) {
-      //   maxHue = 5
-      //   minHue = -5
-      //   top = top + 1
-      //   left = left + 1   
-      //   if (top >750) {
-      //     top = Math.floor(Math.random()*750)
-      //   }
-      //   if (left > 1400) {
-      //     left = Math.floor(Math.random()*1400)
-      //   }
-      // } else {
-      //   maxHue = maxHueTwo
-      //   minHue = minHueTwo
-      // }
+      
 
       const randomMaxHue = Math.floor(maxHue)
       const randomMinHue = Math.ceil(minHue)
@@ -128,12 +110,12 @@ function App() {
 
 
       //end the loop
-      if (dotCount >= 4000) {
+      if (dotCount >= 2000) {
         clearInterval(interval)
       }
 
     }
-      
+      //speed of dot generation
     ,20);
 
     return () => clearInterval(interval);
