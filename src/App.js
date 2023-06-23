@@ -20,10 +20,10 @@ function App() {
   const randomlightness = Math.floor( Math.random() * (randomMaxlight - randomMinlight) + randomMinlight)
 
   const minTop = 0
-  const maxTop = 750
+  const maxTop = 250
 
   const minLeft = 0
-  const maxLeft = 750
+  const maxLeft = 250
 
   let dotCount = 0
   let top = 25
@@ -35,46 +35,67 @@ function App() {
 
     const interval = setInterval(() => {
 
-      if (dotCount%3 === 0) {
-        randomDirection = Math.floor(Math.random() * 8)
+      if (dotCount%2 === 0) {
+        if (randomDirection === 0) {
+          randomDirection = [0,4,7][Math.floor(Math.random() * 3)]
+        } else if (randomDirection === 1) {
+          randomDirection = [1, 5, 6][Math.floor(Math.random() * 3)]          
+        } else if (randomDirection === 2){
+        randomDirection = [2, 4, 5][Math.floor(Math.random() * 3)] 
+        } else if (randomDirection === 3){
+        randomDirection = [3, 6, 7][Math.floor(Math.random() * 3)] 
+        } else if (randomDirection === 4) {
+        randomDirection = [4, 0, 2][Math.floor(Math.random() * 3)] 
+        } else if (randomDirection === 5) {
+        randomDirection = [5, 1, 2][Math.floor(Math.random() * 3)] 
+        } else if (randomDirection === 6) {
+        randomDirection = [6, 1, 3][Math.floor(Math.random() * 3)] 
+        } else if (randomDirection === 7) {
+        randomDirection = [7, 0, 3][Math.floor(Math.random() * 3)] 
+      } else {
+        Math.floor(Math.random() * 8)
       }
+    }
+      
 
 
-      if (dotCount%150 === 0) {
+      if (dotCount%10000 === 0) {
         
         top = Math.floor(Math.random()*maxTop)
         left = Math.floor(Math.random()*maxLeft)
 
-        if (Math.floor(Math.random()*2) === 0) {
-        maxHue = maxHue +2
-        minHue = minHue +2
-        } else {
-          maxHue = maxHue +2
-          minHue = minHue +2
-        }
+        // if (Math.floor(Math.random()*2) === 0) {
+        // maxHue = maxHue +1
+        // minHue = minHue +1
+        // } else {
+        //   maxHue = maxHue -1
+        //   minHue = minHue -1
+        // }
+
+        //TODO add in transition to fade colours
 
       }
 
         if (randomDirection === 0) {
-          top = top+15
+          top = top+3
         } else if (randomDirection === 1) {
-          top = top-15
+          top = top-3
         } else if (randomDirection === 2) {
-          left = left+15
+          left = left+3
         } else if (randomDirection === 3) {
-          left = left-15
+          left = left-3
         } else if (randomDirection === 4) {
-          top = top +10
-          left = left+10
+          top = top +2
+          left = left+2
         } else if (randomDirection === 5) {
-          top = top-10
-          left = left+10
+          top = top-2
+          left = left+2
         } else if (randomDirection === 6) {
-          top = top -10
-          left = left-10
+          top = top -2
+          left = left-2
         } else {
-          top = top +10
-          left = left-10
+          top = top +2
+          left = left-2
         }
 
         if (top >= maxTop) {
@@ -99,9 +120,17 @@ function App() {
       const minSat = Math.ceil(65);
       const randomSaturation = Math.floor( Math.random()*(maxSat-minSat) + minSat)
 
-      let min = Math.ceil(20);
-      let max = Math.floor(30);
+      let min = Math.ceil(7);
+      let max = Math.floor(10);
       let diameter = Math.floor((Math.random()*(max-min)) + min)
+
+        if (Math.floor(Math.random()*2) === 0) {
+        maxHue = maxHue +0.5
+        minHue = minHue +0.5
+        } else {
+          maxHue = maxHue -0.5
+          minHue = minHue -0.5
+        }
       
       setDot( {index: dotCount, hue: randomHue, saturation: randomSaturation, lightness: randomlightness, top: top, left: left, diameter: diameter} )
 
@@ -110,13 +139,13 @@ function App() {
 
 
       //end the loop
-      if (dotCount >= 2000) {
+      if (dotCount >= 10000) {
         clearInterval(interval)
       }
 
     }
       //speed of dot generation
-    ,20);
+    ,10);
 
     return () => clearInterval(interval);
 
@@ -126,15 +155,28 @@ function App() {
     setDots([...dots, dot])
   }, [dot])
 
+let canvas;
+let context;
+
+  useEffect(() => {
+    canvas = document.getElementById('dotCanvas')   // access the canvas object
+    context = canvas.getContext('2d')                // set context to 2d
+    context.fillStyle = `hsl(${dot.hue} ${dot.saturation}% ${dot.lightness}% / 90%)`
+    context.fillRect(dot.left, dot.top, 3, 3)
+  }, [dot])
+
 
 
   return (
     <div className="App">
-      <div id='canvas'>
+      {/* <div id='canvas'>
           {[...dots.map( dot => {
             return <div className='dot' key={dot.key} style={{background: `hsl(${dot.hue} ${dot.saturation}% ${dot.lightness}%)`, top: dot.top, left: dot.left, width: dot.diameter, height: dot.diameter}}></div>
-          })]}
-        </div>
+          })]} */}
+          <canvas id="dotCanvas" width={maxLeft} height={maxTop}>
+  UPDATE BROWSER PLEASE!
+            </canvas>
+        {/* </div> */}
     </div>
   );
 }
