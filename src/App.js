@@ -1,11 +1,22 @@
 import { useState } from 'react';
 import './App.css';
 import { useEffect } from 'react';
+import { eventWrapper } from '@testing-library/user-event/dist/utils';
 
 function App() {
 
   const [dot, setDot] = useState({})
-  const [dots, setDots] = useState([])
+  // const [dots, setDots] = useState([])
+  const [totalDots, setTotalDots] = useState(15000)
+  const [canvasHeight, setCanvasHeight] = useState(600)
+  const [canvasWidth, setCanvasWidth] = useState(800)
+  const [brushStrokeLength, setBrushStrokeLength] = useState(100)
+  const [diameter, setDiameter] = useState(22)
+  const [directionBeforeChange, setDirectionBeforeChange] = useState(2)
+  const [opacity, setOpacity] = useState(80)
+  const [run, setRun] = useState([])
+  const [speed, setSpeed] = useState(3)
+
 
   const dotArray = []
 
@@ -20,10 +31,47 @@ function App() {
   const randomlightness = Math.floor( Math.random() * (randomMaxlight - randomMinlight) + randomMinlight)
 
   const minTop = 0
-  const maxTop = 250
+  //const canvasHeight = 500
 
   const minLeft = 0
-  const maxLeft = 250
+  //const canvasWidth = 500
+
+  //const totalDots = 100000
+  
+  const handleTotalDotChange = (event) => {
+    setTotalDots(event.target.value)
+  };
+  
+  const handleCanvasHeightChange = (event) => {
+    setCanvasHeight(event.target.value)
+  };
+  
+  const handleCanvasWidthChange = (event) => {
+    setCanvasWidth(event.target.value)
+  };
+
+  const handleSubmit = (event) => {
+      event.preventDefault();
+      let runAgain = [...run]
+      setRun([runAgain[0] + 1]);
+  }
+  
+  const handleBrushStrokeLengthChange = (event) => {
+    setBrushStrokeLength(event.target.value)
+  };
+  const handleDiameterChange = (event) => {
+    setDiameter(event.target.value)
+  };
+  const handleOpacityChange = (event) => {
+    setOpacity(event.target.value)
+  };
+  const handleDirectionBeforeChange = (event) => {
+    setDirectionBeforeChange(event.target.value)
+  };
+  const handleSpeedChange = (event) => {
+    setSpeed(event.target.value)
+  };
+  //const brushStrokeLength = 1000
 
   let dotCount = 0
   let top = 25
@@ -35,7 +83,7 @@ function App() {
 
     const interval = setInterval(() => {
 
-      if (dotCount%2 === 0) {
+      if (dotCount%directionBeforeChange === 0) {
         if (randomDirection === 0) {
           randomDirection = [0,4,7][Math.floor(Math.random() * 3)]
         } else if (randomDirection === 1) {
@@ -59,10 +107,10 @@ function App() {
       
 
 
-      if (dotCount%10000 === 0) {
+      if (dotCount%brushStrokeLength === 0) {
         
-        top = Math.floor(Math.random()*maxTop)
-        left = Math.floor(Math.random()*maxLeft)
+        top = Math.floor(Math.random()*canvasHeight)
+        left = Math.floor(Math.random()*canvasWidth)
 
         // if (Math.floor(Math.random()*2) === 0) {
         // maxHue = maxHue +1
@@ -76,39 +124,43 @@ function App() {
 
       }
 
+      let min = Math.ceil(diameter-diameter/5);
+      let max = Math.floor(diameter);
+      let randomDiameter = Math.floor((Math.random()*(max-min)) + min)
+
         if (randomDirection === 0) {
-          top = top+3
+          top = top+randomDiameter/3
         } else if (randomDirection === 1) {
-          top = top-3
+          top = top-randomDiameter/3
         } else if (randomDirection === 2) {
-          left = left+3
+          left = left+randomDiameter/3
         } else if (randomDirection === 3) {
-          left = left-3
+          left = left-randomDiameter/3
         } else if (randomDirection === 4) {
-          top = top +2
-          left = left+2
+          top = top+randomDiameter/3
+          left = left+randomDiameter/3
         } else if (randomDirection === 5) {
-          top = top-2
-          left = left+2
+          top = top-randomDiameter/3
+          left = left+randomDiameter/3
         } else if (randomDirection === 6) {
-          top = top -2
-          left = left-2
+          top = top-randomDiameter/3
+          left = left-randomDiameter/3
         } else {
-          top = top +2
-          left = left-2
+          top = top+randomDiameter/3
+          left = left-randomDiameter/3
         }
 
-        if (top >= maxTop) {
-          top = minTop + 15
+        if (top >= canvasHeight) {
+          top = 1
         }
         if (top <= minTop) {
-          top = maxTop - 15
+          top = canvasHeight
         }
-        if (left >= maxLeft) {
-          left = minLeft + 15
+        if (left >= canvasWidth) {
+          left = 1
         }
         if (left <= minLeft) {
-          left = maxLeft - 15
+          left = canvasWidth
         }
       
 
@@ -120,50 +172,61 @@ function App() {
       const minSat = Math.ceil(65);
       const randomSaturation = Math.floor( Math.random()*(maxSat-minSat) + minSat)
 
-      let min = Math.ceil(7);
-      let max = Math.floor(10);
-      let diameter = Math.floor((Math.random()*(max-min)) + min)
 
         if (Math.floor(Math.random()*2) === 0) {
-        maxHue = maxHue +0.5
-        minHue = minHue +0.5
+        maxHue = maxHue +0.2
+        minHue = minHue +0.2
         } else {
-          maxHue = maxHue -0.5
-          minHue = minHue -0.5
+          maxHue = maxHue -0.2
+          minHue = minHue -0.2
         }
       
-      setDot( {index: dotCount, hue: randomHue, saturation: randomSaturation, lightness: randomlightness, top: top, left: left, diameter: diameter} )
+      setDot( {index: dotCount, hue: randomHue, saturation: randomSaturation, lightness: randomlightness, top: top, left: left, diameter: randomDiameter} )
 
       //add to dot count
       dotCount++
 
 
       //end the loop
-      if (dotCount >= 10000) {
+      if (dotCount >= totalDots) {
         clearInterval(interval)
       }
 
     }
       //speed of dot generation
-    ,10);
+    ,speed);
 
     return () => clearInterval(interval);
 
-  }, []);
+  }, [run]);
 
-  useEffect(() => {
-    setDots([...dots, dot])
-  }, [dot])
+  // useEffect(() => {
+  //   setDots([...dots, dot])
+  // }, [dot])
 
 let canvas;
 let context;
 
+//set canvas background to white
+useEffect(() => {
+  canvas = document.getElementById('dotCanvas')   // access the canvas object
+  context = canvas.getContext('2d')                // set context to 2d
+  context.fillStyle = 'whitesmoke'
+  context.fillRect(0,0, canvasWidth, canvasHeight)
+}, [canvasHeight, canvasWidth, run])
+
   useEffect(() => {
     canvas = document.getElementById('dotCanvas')   // access the canvas object
     context = canvas.getContext('2d')                // set context to 2d
-    context.fillStyle = `hsl(${dot.hue} ${dot.saturation}% ${dot.lightness}% / 90%)`
-    context.fillRect(dot.left, dot.top, 3, 3)
-  }, [dot])
+
+    let blob = new Path2D();
+    //TO DO - make it that dot is centred on the line and does not generate with overhang below or to right
+    blob.roundRect(dot.left, dot.top, dot.diameter, dot.diameter, dot.diameter/5)
+
+    context.fillStyle = `hsl(${dot.hue} ${dot.saturation}% ${dot.lightness}% / ${opacity}%)`
+    context.fill(blob)
+    //context.fill(dot.left, dot.top, diameter, diameter)
+  }, [dot, run])
 
 
 
@@ -173,9 +236,36 @@ let context;
           {[...dots.map( dot => {
             return <div className='dot' key={dot.key} style={{background: `hsl(${dot.hue} ${dot.saturation}% ${dot.lightness}%)`, top: dot.top, left: dot.left, width: dot.diameter, height: dot.diameter}}></div>
           })]} */}
-          <canvas id="dotCanvas" width={maxLeft} height={maxTop}>
+          <canvas id="dotCanvas" width={canvasWidth} height={canvasHeight}>
   UPDATE BROWSER PLEASE!
             </canvas>
+            <form onSubmit={handleSubmit}>
+              <label>Total # of Dots:
+                <input onChange={handleTotalDotChange} min={1000} value={totalDots} type='number'></input>
+              </label>
+              <label>Brush Stroke Length:
+                <input onChange={handleBrushStrokeLengthChange} value={brushStrokeLength} type='number'></input>
+              </label>
+              <label>Change Direction (px):
+                <input onChange={handleDirectionBeforeChange} min={1} value={directionBeforeChange} type='number'></input>
+              </label>
+              <label>Diameter (px):
+                <input onChange={handleDiameterChange} value={diameter} type='number'></input>
+              </label>
+              <label>Opacity (%):
+                <input onChange={handleOpacityChange} min={0} max={100} value={opacity} type='number'></input>
+              </label>
+              <label>Canvas Height (pixels):
+                <input onChange={handleCanvasHeightChange} min={100} max={700} value={canvasHeight} type='number'></input>
+              </label>
+              <label>Canvas Width (pixels):
+                <input onChange={handleCanvasWidthChange} min={100} max={1450} value={canvasWidth} type='number'></input>
+              </label>
+              <label>Speed of dot generation (ms):
+                <input onChange={handleSpeedChange} min={0.1} max={1000} value={speed} type='number' step={0.1}></input>
+              </label>
+              <input type="submit" value="ART!" />
+            </form>
         {/* </div> */}
     </div>
   );
