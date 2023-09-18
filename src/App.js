@@ -13,9 +13,12 @@ function App() {
   const [diameter, setDiameter] = useState(30)
   const [directionBeforeChange, setDirectionBeforeChange] = useState(1)
   const [opacity, setOpacity] = useState(85)
-  const [run, setRun] = useState([])
   const [speed, setSpeed] = useState(15)
+  const [colourChange, setColourChange] = useState(1.0)
+  const [smooth, setSmooth] = useState(true)
+  const [run, setRun] = useState([])
 
+  // A random starting hue
   let maxHue = Math.floor(Math.random() * 360)
   let minHue = maxHue - 10
 
@@ -40,24 +43,26 @@ function App() {
     const interval = setInterval(() => {
 
       if (dotCount % directionBeforeChange === 0) {
-        if (randomDirection === 0) {
-          randomDirection = [0, 4, 7][Math.floor(Math.random() * 3)]
-        } else if (randomDirection === 1) {
-          randomDirection = [1, 5, 6][Math.floor(Math.random() * 3)]
-        } else if (randomDirection === 2) {
-          randomDirection = [2, 4, 5][Math.floor(Math.random() * 3)]
-        } else if (randomDirection === 3) {
-          randomDirection = [3, 6, 7][Math.floor(Math.random() * 3)]
-        } else if (randomDirection === 4) {
-          randomDirection = [4, 0, 2][Math.floor(Math.random() * 3)]
-        } else if (randomDirection === 5) {
-          randomDirection = [5, 1, 2][Math.floor(Math.random() * 3)]
-        } else if (randomDirection === 6) {
-          randomDirection = [6, 1, 3][Math.floor(Math.random() * 3)]
-        } else if (randomDirection === 7) {
-          randomDirection = [7, 0, 3][Math.floor(Math.random() * 3)]
+        if (smooth === true) {
+          if (randomDirection === 0) {
+            randomDirection = [0, 4, 7][Math.floor(Math.random() * 3)]
+          } else if (randomDirection === 1) {
+            randomDirection = [1, 5, 6][Math.floor(Math.random() * 3)]
+          } else if (randomDirection === 2) {
+            randomDirection = [2, 4, 5][Math.floor(Math.random() * 3)]
+          } else if (randomDirection === 3) {
+            randomDirection = [3, 6, 7][Math.floor(Math.random() * 3)]
+          } else if (randomDirection === 4) {
+            randomDirection = [4, 0, 2][Math.floor(Math.random() * 3)]
+          } else if (randomDirection === 5) {
+            randomDirection = [5, 1, 2][Math.floor(Math.random() * 3)]
+          } else if (randomDirection === 6) {
+            randomDirection = [6, 1, 3][Math.floor(Math.random() * 3)]
+          } else if (randomDirection === 7) {
+            randomDirection = [7, 0, 3][Math.floor(Math.random() * 3)]
+          }
         } else {
-          Math.floor(Math.random() * 8)
+          randomDirection = Math.floor(Math.random() * 8)
         }
       }
 
@@ -116,12 +121,13 @@ function App() {
       const minSat = Math.ceil(65);
       const randomSaturation = Math.floor(Math.random() * (maxSat - minSat) + minSat)
 
+      // Hue either randomly goes clockwise or anticlockwise on colour wheel
       if (Math.floor(Math.random() * 2) === 0) {
-        maxHue = maxHue + 0.1
-        minHue = minHue + 0.1
+        maxHue = maxHue + colourChange
+        minHue = minHue + colourChange
       } else {
-        maxHue = maxHue - 0.1
-        minHue = minHue - 0.1
+        maxHue = maxHue - colourChange
+        minHue = minHue - colourChange
       }
 
       setDot({ index: dotCount, hue: randomHue, saturation: randomSaturation, lightness: randomlightness, top: top, left: left, diameter: randomDiameter })
@@ -176,7 +182,7 @@ function App() {
         <canvas id="dotCanvas" width={canvasWidth} height={canvasHeight}>
           Please upgrade your browser
         </canvas>
-        <ParameterForm totalDots={totalDots} setTotalDots={setTotalDots} canvasHeight={canvasHeight} setCanvasHeight={setCanvasHeight} canvasWidth={canvasWidth} setCanvasWidth={setCanvasWidth} brushStrokeLength={brushStrokeLength} setBrushStrokeLength={setBrushStrokeLength} diameter={diameter} setDiameter={setDiameter} directionBeforeChange={directionBeforeChange} setDirectionBeforeChange={setDirectionBeforeChange} opacity={opacity} setOpacity={setOpacity} speed={speed} setSpeed={setSpeed} run={run} setRun={setRun}/>
+        <ParameterForm totalDots={totalDots} setTotalDots={setTotalDots} canvasHeight={canvasHeight} setCanvasHeight={setCanvasHeight} canvasWidth={canvasWidth} setCanvasWidth={setCanvasWidth} brushStrokeLength={brushStrokeLength} setBrushStrokeLength={setBrushStrokeLength} diameter={diameter} setDiameter={setDiameter} directionBeforeChange={directionBeforeChange} setDirectionBeforeChange={setDirectionBeforeChange} opacity={opacity} setOpacity={setOpacity} speed={speed} setSpeed={setSpeed} colourChange={colourChange} setColourChange={setColourChange} smooth={smooth} setSmooth={setSmooth} run={run} setRun={setRun}/>
       </div>
     </div>
   );
