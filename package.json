@@ -1,7 +1,7 @@
 {
   "name": "abstract-art",
   "version": "0.1.0",
-  "homepage": "https://mr-mckenzie.github.io/abstract",
+  "homepage": "https://mr-mckenzie.github.io/Abstract",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
