@@ -1,25 +1,47 @@
+
+.header {
+  display: flex;
+}
+
+.divLogo {
+    opacity: 0.95;
+    border-radius: 5px;
+    background-color: aquamarine;
+    width: 30px;
+    height: 30px;
+  }
+
+.content {
+  display: flex;
+  justify-content: space-around;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+label{
+  display: flex;
+  width: 17rem;
+  justify-content: space-between;
+  padding: 0.25rem;
+}
+
+input {
+  width:3.5rem
+}
+
 /* @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 0.25s linear;
+  .divLogo {
+    animation: div-spin infinite 240s linear;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
+@keyframes div-spin {
   from {
     transform: rotate(0deg);
   }
@@ -27,14 +49,3 @@
     transform: rotate(360deg);
   }
 } */
-
-.dot {
-  opacity: 0.95;
-  position: absolute;
-  border-radius: 5px;
-}
-
-.dotCanvas {
-  background-color: white;
-}
-

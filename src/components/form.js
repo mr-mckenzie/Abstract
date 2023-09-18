@@ -31,7 +31,6 @@ const ParameterForm = ({totalDots, setTotalDots, canvasHeight, setCanvasHeight, 
     }
 
     return (
-        <div>
             <form onSubmit={handleSubmit}>
                 <label>Total # of Dots:
                     <input onChange={handleTotalDotChange} min={1000} value={totalDots} type='number'></input>
@@ -59,7 +58,6 @@ const ParameterForm = ({totalDots, setTotalDots, canvasHeight, setCanvasHeight, 
                 </label>
                 <input type="submit" value="ART!" />
             </form>
-        </div>
     );
 };
 

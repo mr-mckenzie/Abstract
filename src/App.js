@@ -165,13 +165,19 @@ function App() {
     //context.fill(dot.left, dot.top, diameter, diameter)
   }, [dot, run])
 
-
   return (
     <div className="App">
-      <canvas id="dotCanvas" width={canvasWidth} height={canvasHeight}>
-        Please upgrade your browser
-      </canvas>
-      <ParameterForm totalDots={totalDots} setTotalDots={setTotalDots} canvasHeight={canvasHeight} setCanvasHeight={setCanvasHeight} canvasWidth={canvasWidth} setCanvasWidth={setCanvasWidth} brushStrokeLength={brushStrokeLength} setBrushStrokeLength={setBrushStrokeLength} diameter={diameter} setDiameter={setDiameter} directionBeforeChange={directionBeforeChange} setDirectionBeforeChange={setDirectionBeforeChange} opacity={opacity} setOpacity={setOpacity} speed={speed} setSpeed={setSpeed} run={run} setRun={setRun}/>
+      <div className="header">
+        <div className="divLogo"></div>
+        {/* <div className="divLogo" style={{backgroundColor: `hsl(${dot.hue} ${dot.saturation}% ${dot.lightness}% / ${opacity}%)`}}></div> */}
+        <h1>Abstract</h1>
+      </div>
+      <div className="content">
+        <canvas id="dotCanvas" width={canvasWidth} height={canvasHeight}>
+          Please upgrade your browser
+        </canvas>
+        <ParameterForm totalDots={totalDots} setTotalDots={setTotalDots} canvasHeight={canvasHeight} setCanvasHeight={setCanvasHeight} canvasWidth={canvasWidth} setCanvasWidth={setCanvasWidth} brushStrokeLength={brushStrokeLength} setBrushStrokeLength={setBrushStrokeLength} diameter={diameter} setDiameter={setDiameter} directionBeforeChange={directionBeforeChange} setDirectionBeforeChange={setDirectionBeforeChange} opacity={opacity} setOpacity={setOpacity} speed={speed} setSpeed={setSpeed} run={run} setRun={setRun}/>
+      </div>
     </div>
   );
 }
