@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "//mr-mckenzie.github.io/abstract/static/css/main.6c82ec77.css",
+    "main.js": "//mr-mckenzie.github.io/abstract/static/js/main.ba137b56.js",
+    "static/js/787.8e50ccb3.chunk.js": "//mr-mckenzie.github.io/abstract/static/js/787.8e50ccb3.chunk.js",
+    "index.html": "//mr-mckenzie.github.io/abstract/index.html",
+    "main.6c82ec77.css.map": "//mr-mckenzie.github.io/abstract/static/css/main.6c82ec77.css.map",
+    "main.ba137b56.js.map": "//mr-mckenzie.github.io/abstract/static/js/main.ba137b56.js.map",
+    "787.8e50ccb3.chunk.js.map": "//mr-mckenzie.github.io/abstract/static/js/787.8e50ccb3.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6c82ec77.css",
+    "static/js/main.ba137b56.js"
+  ]
+}
