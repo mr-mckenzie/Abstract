@@ -17,6 +17,7 @@ function App() {
   const [colourChange, setColourChange] = useState(1.0)
   const [smooth, setSmooth] = useState(true)
   const [run, setRun] = useState([])
+  const [logoStyle, setLogoStyle] = useState("red")
 
   // A random starting hue
   let maxHue = Math.floor(Math.random() * 360)
@@ -130,7 +131,7 @@ function App() {
         minHue = minHue - colourChange
       }
 
-      setDot({ index: dotCount, hue: randomHue, saturation: randomSaturation, lightness: randomlightness, top: top, left: left, diameter: randomDiameter })
+      setDot({ index: dotCount, hue: randomHue, saturation: randomSaturation, lightness: randomlightness, top: top, left: left, diameter: randomDiameter, opacity: opacity, dotNumber: dotCount})
 
       //add to dot count
       dotCount++
@@ -140,7 +141,7 @@ function App() {
         clearInterval(interval)
       }
     }
-      //speed of dot generation
+      //rate of dot generation
       , speed);
 
     return () => clearInterval(interval);
@@ -156,7 +157,7 @@ function App() {
     context = canvas.getContext('2d')                // set context to 2d
     context.fillStyle = 'whitesmoke'
     context.fillRect(0, 0, canvasWidth, canvasHeight)
-  }, [canvasHeight, canvasWidth, run])
+  }, [run])
 
   useEffect(() => {
     canvas = document.getElementById('dotCanvas')   // access the canvas object
@@ -164,25 +165,29 @@ function App() {
 
     let blob = new Path2D();
     //TO DO - make it that dot is centred on the line and does not generate with overhang below or to right
-    blob.roundRect(dot.left, dot.top, dot.diameter, dot.diameter, dot.diameter / 5)
+    blob.roundRect(dot.left - (diameter / 2), dot.top - (diameter / 2), dot.diameter, dot.diameter, dot.diameter / 5)
 
-    context.fillStyle = `hsl(${dot.hue} ${dot.saturation}% ${dot.lightness}% / ${opacity}%)`
+    context.fillStyle = `hsl(${dot.hue} ${dot.saturation}% ${dot.lightness}% / ${dot.opacity}%)`
     context.fill(blob)
-    //context.fill(dot.left, dot.top, diameter, diameter)
-  }, [dot, run])
+
+    if ((dot.dotNumber * speed) % 1000 === 0 || dot.dotNumber===0) {
+      setLogoStyle(`hsl(${dot.hue} ${dot.saturation}% ${dot.lightness}% / 85%)`)
+    }
+
+  }, [dot])
 
   return (
     <div className="App">
       <div className="header">
-        <div className="divLogo"></div>
-        {/* <div className="divLogo" style={{backgroundColor: `hsl(${dot.hue} ${dot.saturation}% ${dot.lightness}% / ${opacity}%)`}}></div> */}
+        {/* <div className="divLogo"></div> */}
+        <div className="divLogo" style={{ backgroundColor: logoStyle}}></div>
         <h1>Abstract</h1>
       </div>
       <div className="content">
         <canvas id="dotCanvas" width={canvasWidth} height={canvasHeight}>
           Please upgrade your browser
         </canvas>
-        <ParameterForm totalDots={totalDots} setTotalDots={setTotalDots} canvasHeight={canvasHeight} setCanvasHeight={setCanvasHeight} canvasWidth={canvasWidth} setCanvasWidth={setCanvasWidth} brushStrokeLength={brushStrokeLength} setBrushStrokeLength={setBrushStrokeLength} diameter={diameter} setDiameter={setDiameter} directionBeforeChange={directionBeforeChange} setDirectionBeforeChange={setDirectionBeforeChange} opacity={opacity} setOpacity={setOpacity} speed={speed} setSpeed={setSpeed} colourChange={colourChange} setColourChange={setColourChange} smooth={smooth} setSmooth={setSmooth} run={run} setRun={setRun}/>
+        <ParameterForm totalDots={totalDots} setTotalDots={setTotalDots} canvasHeight={canvasHeight} setCanvasHeight={setCanvasHeight} canvasWidth={canvasWidth} setCanvasWidth={setCanvasWidth} brushStrokeLength={brushStrokeLength} setBrushStrokeLength={setBrushStrokeLength} diameter={diameter} setDiameter={setDiameter} directionBeforeChange={directionBeforeChange} setDirectionBeforeChange={setDirectionBeforeChange} opacity={opacity} setOpacity={setOpacity} speed={speed} setSpeed={setSpeed} colourChange={colourChange} setColourChange={setColourChange} smooth={smooth} setSmooth={setSmooth} run={run} setRun={setRun} />
       </div>
     </div>
   );
