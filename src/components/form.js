@@ -59,16 +59,6 @@ const ParameterForm = ({ totalDots, setTotalDots, canvasHeight, setCanvasHeight,
             setColourChange(0.2)
             setSmooth(true)
         }
-        else if (event.target.value === "dabs") {
-            setTotalDots(10000)
-            setBrushStrokeLength(100)
-            setDiameter(15)
-            setOpacity(75)
-            setDirectionBeforeChange(1)
-            setSpeed(7)
-            setColourChange(0.1)
-            setSmooth(false)
-        }
         else if (event.target.value === "droplets") {
             setTotalDots(3000)
             setBrushStrokeLength(1)
@@ -89,6 +79,16 @@ const ParameterForm = ({ totalDots, setTotalDots, canvasHeight, setCanvasHeight,
             setColourChange(5)
             setSmooth(true)
         }
+        else if (event.target.value === "ghost") {
+            setTotalDots(10000)
+            setBrushStrokeLength(1000)
+            setDiameter(20)
+            setOpacity(7)
+            setDirectionBeforeChange(6)
+            setSpeed(60)
+            setColourChange(1)
+            setSmooth(true)
+        }
         else if (event.target.value === "smoke") {
             setTotalDots(10000)
             setBrushStrokeLength(5)
@@ -97,6 +97,16 @@ const ParameterForm = ({ totalDots, setTotalDots, canvasHeight, setCanvasHeight,
             setDirectionBeforeChange(3)
             setSpeed(3)
             setColourChange(2)
+            setSmooth(false)
+        }
+        else if (event.target.value === "squiggle") {
+            setTotalDots(75000)
+            setBrushStrokeLength(75)
+            setDiameter(15)
+            setOpacity(75)
+            setDirectionBeforeChange(1)
+            setSpeed(7)
+            setColourChange(0.5)
             setSmooth(false)
         }
         else if (event.target.value === "tartan") {
@@ -158,11 +168,11 @@ const ParameterForm = ({ totalDots, setTotalDots, canvasHeight, setCanvasHeight,
                 <label>Canvas Width (pixels):
                     <input onChange={handleCanvasWidthChange} min={100} max={1450} value={canvasWidth} type='number'></input>
                 </label> */}
-            <label>Speed of colour change:
+            <label>Rate of colour change:
                 <input onChange={handleColourChange} min={0.1} max={5} value={colourChange} type='number' step={0.1}></input>
             </label>
-            <label>Speed of dot generation (ms):
-                <input onChange={handleSpeedChange} min={0.1} max={1000} value={speed} type='number' step={0.1}></input>
+            <label>Interval between dot generation:
+                <input onChange={handleSpeedChange} min={0.1} max={100} value={speed} type='number' step={0.1}></input>
             </label>
             <fieldset onChange={handleSmoothChange}>
                 <legend>Smooth direction changes?</legend>
@@ -177,9 +187,10 @@ const ParameterForm = ({ totalDots, setTotalDots, canvasHeight, setCanvasHeight,
                 <select onChange={handlePresetChange} value={preset}>
                     <option value="classic">Classic</option>
                     <option value="rainbow">Crawling Rainbow</option>
-                    <option value="dabs">Dabs of Colour</option>
                     <option value="droplets">Droplets</option>
+                    <option value="ghost">Ghost Train</option>
                     <option value="smoke">Smokescreen</option>
+                    <option value="squiggle">Squiggles</option>
                     <option value="tartan">Tartan</option>
                     <option value="tiny">Tiny Snake</option>
                     <option value="wallpaper">70's Wallpaper</option>
