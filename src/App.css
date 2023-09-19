@@ -1,3 +1,6 @@
+html, input, option {
+  font-family: 'Courier New', Courier, monospace;
+}
 
 .header {
   display: flex;
@@ -33,6 +36,16 @@ label{
 
 input {
   width:3.5rem
+}
+
+@media screen and (max-width:1110px) {
+  .content {
+    display: flex;
+    flex-direction: column;
+  }
+  form {
+    padding-top: 1rem;
+  }
 }
 
 /* @media (prefers-reduced-motion: no-preference) {
