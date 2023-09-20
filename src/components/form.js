@@ -162,8 +162,12 @@ const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStr
         }
     }
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+    }
+
     return (
-        <form>
+        <form onSubmit={handleSubmit}>
             <label>Total # of Dots:
                 <input onChange={handleTotalDotChange} min={1000} value={totalDots} type='number'></input>
             </label>

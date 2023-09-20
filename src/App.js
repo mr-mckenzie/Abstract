@@ -168,7 +168,7 @@ function App() {
 
     let blob = new Path2D();
     //TO DO - make it that dot is centred on the line and does not generate with overhang below or to right
-    blob.roundRect(dot.left - (diameter / 2), dot.top - (diameter / 2), dot.diameter, dot.diameter, dot.diameter / 5)
+    blob.roundRect(dot.left - (dot.diameter / 2), dot.top - (dot.diameter / 2), dot.diameter, dot.diameter, dot.diameter / 5)
 
     context.fillStyle = `hsl(${dot.hue} ${dot.saturation}% ${dot.lightness}% / ${dot.opacity}%)`
     context.fill(blob)
