@@ -96,7 +96,7 @@ const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStr
             setBrushStrokeLength(100)
             setDiameter(80)
             setOpacity(85)
-            setDirectionBeforeChange(100)
+            setDirectionBeforeChange(0)
             setSpeed(0.1)
             setColourChange(0.6)
             setSmooth(false)
