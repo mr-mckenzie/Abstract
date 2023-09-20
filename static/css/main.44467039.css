@@ -1,2 +1,0 @@
-html,input,option{font-family:Courier New,Courier,monospace}.header{display:flex}.divLogo{background-color:#7fffd4;border-radius:5px;height:30px;opacity:.95;width:30px}.content,form{display:flex;justify-content:space-around}form{align-items:center;flex-direction:column;flex-wrap:wrap}label{display:flex;justify-content:space-between;padding:.25rem;width:17rem}input{width:3.5rem}@media screen and (max-width:1110px){.content{display:flex;flex-direction:column}form{padding-top:1rem}}
-/*# sourceMappingURL=main.44467039.css.map*/
