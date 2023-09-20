@@ -16,7 +16,7 @@ function App() {
   const [speed, setSpeed] = useState(15)
   const [colourChange, setColourChange] = useState(1.0)
   const [smooth, setSmooth] = useState(true)
-  const [run, setRun] = useState(false)
+  const [run, setRun] = useState(true)
   const [logoStyle, setLogoStyle] = useState("aquamarine")
 
   // A random starting hue

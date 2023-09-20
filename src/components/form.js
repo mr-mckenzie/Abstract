@@ -2,10 +2,7 @@ import { useState } from "react";
 
 const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStrokeLength, diameter, setDiameter, directionBeforeChange, setDirectionBeforeChange, opacity, setOpacity, speed, setSpeed, colourChange, setColourChange, smooth, setSmooth, run, setRun }) => {
 
-    // let startButton = document.getElementById("start-button")
-    // let stopButton = document.getElementById("stop-button")
-
-    const [preset, setPreset] = useState("default")
+    const [preset, setPreset] = useState("classic")
 
     const handleTotalDotChange = (event) => {
         const newValue = Number(event.target.value)
@@ -53,8 +50,6 @@ const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStr
         setRun(false)
     }
     const handlePresetChange = (event) => {
-        event.preventDefault();
-        console.log(event.target.value)
         setPreset(event.target.value)
         if (event.target.value === "classic") {
             setTotalDots(15000)
@@ -206,11 +201,11 @@ const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStr
                     <option value="droplets">Droplets</option>
                     <option value="ghost">Ghost Train</option>
                     <option value="meteor">Meteor Shower</option>
-                    <option value="cover">Monochrome Undercoat</option>
                     <option value="smoke">Smokescreen</option>
                     <option value="squiggle">Squiggles</option>
                     <option value="tartan">Tartan</option>
                     <option value="tiny">Tiny Snake</option>
+                    <option value="undercoat">Undercoat</option>
                     <option value="wallpaper">70s Wallpaper</option>
                 </select>
             </label>
