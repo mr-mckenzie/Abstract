@@ -7,8 +7,6 @@ function App() {
 
   const [dot, setDot] = useState({})
   const [totalDots, setTotalDots] = useState(15000)
-  const [canvasHeight, setCanvasHeight] = useState(600)
-  const [canvasWidth, setCanvasWidth] = useState(800)
   const [brushStrokeLength, setBrushStrokeLength] = useState(200)
   const [diameter, setDiameter] = useState(30)
   const [directionBeforeChange, setDirectionBeforeChange] = useState(1)
@@ -30,12 +28,15 @@ function App() {
   const randomMinlight = Math.ceil(minLight)
   const randomlightness = Math.floor(Math.random() * (randomMaxlight - randomMinlight) + randomMinlight)
 
+  let canvasHeight = 600
+  let canvasWidth = 800
+
   const minTop = 0
   const minLeft = 0
 
   let dotCount = 0
-  let top = 25
-  let left = 25
+  let top
+  let left
 
   let randomDirection = Math.floor(Math.random() * 8)
 
@@ -48,23 +49,13 @@ function App() {
         if (dotCount % directionBeforeChange === 0) {
           if (smooth === true) {
             if (randomDirection === 0) {
-              randomDirection = [0, 4, 7][Math.floor(Math.random() * 3)]
-            } else if (randomDirection === 1) {
-              randomDirection = [1, 5, 6][Math.floor(Math.random() * 3)]
-            } else if (randomDirection === 2) {
-              randomDirection = [2, 4, 5][Math.floor(Math.random() * 3)]
-            } else if (randomDirection === 3) {
-              randomDirection = [3, 6, 7][Math.floor(Math.random() * 3)]
-            } else if (randomDirection === 4) {
-              randomDirection = [4, 0, 2][Math.floor(Math.random() * 3)]
-            } else if (randomDirection === 5) {
-              randomDirection = [5, 1, 2][Math.floor(Math.random() * 3)]
-            } else if (randomDirection === 6) {
-              randomDirection = [6, 1, 3][Math.floor(Math.random() * 3)]
+              randomDirection = [7, randomDirection, randomDirection+1][Math.floor(Math.random() * 3)]
             } else if (randomDirection === 7) {
-              randomDirection = [7, 0, 3][Math.floor(Math.random() * 3)]
-            }
-          } else {
+              randomDirection = [randomDirection-1, randomDirection, 0][Math.floor(Math.random() * 3)]
+            } else {
+              randomDirection = [randomDirection-1, randomDirection, randomDirection+1][Math.floor(Math.random() * 3)]
+          } 
+        } else {
             randomDirection = Math.floor(Math.random() * 8)
           }
         }
@@ -82,24 +73,32 @@ function App() {
         let randomDiameter = Math.floor((Math.random() * (max - min)) + min)
 
         if (randomDirection === 0) {
-          top = top + randomDiameter / 3
-        } else if (randomDirection === 1) {
+          // up
           top = top - randomDiameter / 3
+        } else if (randomDirection === 1) {
+          // up and right
+          top = top - randomDiameter / 3
+          left = left + randomDiameter / 3
         } else if (randomDirection === 2) {
+          // right
           left = left + randomDiameter / 3
         } else if (randomDirection === 3) {
-          left = left - randomDiameter / 3
-        } else if (randomDirection === 4) {
+          // down and right
           top = top + randomDiameter / 3
           left = left + randomDiameter / 3
+        } else if (randomDirection === 4) {
+          // down
+          top = top + randomDiameter / 3
         } else if (randomDirection === 5) {
-          top = top - randomDiameter / 3
-          left = left + randomDiameter / 3
+          // down and left
+          top = top + randomDiameter / 3
+          left = left - randomDiameter / 3
         } else if (randomDirection === 6) {
-          top = top - randomDiameter / 3
+          // left
           left = left - randomDiameter / 3
         } else {
-          top = top + randomDiameter / 3
+          // up and left
+          top = top - randomDiameter / 3
           left = left - randomDiameter / 3
         }
 
@@ -143,7 +142,6 @@ function App() {
           clearInterval(interval)
         }
       }
-        //rate of dot generation
         , speed);
 
       return () => clearInterval(interval);
