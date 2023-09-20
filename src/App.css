@@ -1,4 +1,6 @@
-html, input, option {
+html,
+input,
+option {
   font-family: 'Courier New', Courier, monospace;
 }
 
@@ -6,13 +8,17 @@ html, input, option {
   display: flex;
 }
 
+canvas {
+  background-color: whitesmoke;
+}
+
 .divLogo {
-    opacity: 0.95;
-    border-radius: 5px;
-    background-color: aquamarine;
-    width: 30px;
-    height: 30px;
-  }
+  opacity: 0.95;
+  border-radius: 5px;
+  background-color: aquamarine;
+  width: 30px;
+  height: 30px;
+}
 
 .content {
   display: flex;
@@ -27,7 +33,7 @@ form {
   align-items: center;
 }
 
-label{
+label {
   display: flex;
   width: 17rem;
   justify-content: space-between;
@@ -35,7 +41,14 @@ label{
 }
 
 input {
-  width:3.5rem
+  width: 3.5rem
+}
+
+#start-button,
+#stop-button {
+  width: 10rem;
+  margin: 0.25rem;
+  padding: 0.25rem;
 }
 
 @media screen and (max-width:1110px) {
@@ -43,22 +56,9 @@ input {
     display: flex;
     flex-direction: column;
   }
+
   form {
     padding-top: 1rem;
+    padding-bottom: 10rem;
   }
 }
-
-/* @media (prefers-reduced-motion: no-preference) {
-  .divLogo {
-    animation: div-spin infinite 240s linear;
-  }
-}
-
-@keyframes div-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */

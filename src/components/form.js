@@ -1,18 +1,15 @@
 import { useState } from "react";
 
-const ParameterForm = ({ totalDots, setTotalDots, canvasHeight, setCanvasHeight, canvasWidth, setCanvasWidth, brushStrokeLength, setBrushStrokeLength, diameter, setDiameter, directionBeforeChange, setDirectionBeforeChange, opacity, setOpacity, speed, setSpeed, colourChange, setColourChange, smooth, setSmooth, run, setRun }) => {
+const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStrokeLength, diameter, setDiameter, directionBeforeChange, setDirectionBeforeChange, opacity, setOpacity, speed, setSpeed, colourChange, setColourChange, smooth, setSmooth, run, setRun }) => {
+
+    // let startButton = document.getElementById("start-button")
+    // let stopButton = document.getElementById("stop-button")
 
     const [preset, setPreset] = useState("default")
 
     const handleTotalDotChange = (event) => {
         const newValue = Number(event.target.value)
         setTotalDots(newValue)
-    };
-    const handleCanvasHeightChange = (event) => {
-        setCanvasHeight(event.target.value)
-    };
-    const handleCanvasWidthChange = (event) => {
-        setCanvasWidth(event.target.value)
     };
     const handleBrushStrokeLengthChange = (event) => {
         const newValue = Number(event.target.value)
@@ -45,6 +42,16 @@ const ParameterForm = ({ totalDots, setTotalDots, canvasHeight, setCanvasHeight,
             setSmooth(false)
         }
     }
+    const handleStartButton = (event) => {
+        if (run != true) {
+            setRun(true)
+        } else if (run != "restart") {
+            setRun("restart")
+        }
+    }
+    const handleStopButton = (event) => {
+        setRun(false)
+    }
     const handlePresetChange = (event) => {
         event.preventDefault();
         console.log(event.target.value)
@@ -56,7 +63,7 @@ const ParameterForm = ({ totalDots, setTotalDots, canvasHeight, setCanvasHeight,
             setOpacity(85)
             setDirectionBeforeChange(1)
             setSpeed(15)
-            setColourChange(0.2)
+            setColourChange(1)
             setSmooth(true)
         }
         else if (event.target.value === "droplets") {
@@ -73,7 +80,7 @@ const ParameterForm = ({ totalDots, setTotalDots, canvasHeight, setCanvasHeight,
             setTotalDots(100000)
             setBrushStrokeLength(100000)
             setDiameter(30)
-            setOpacity(85)
+            setOpacity(70)
             setDirectionBeforeChange(3)
             setSpeed(50)
             setColourChange(5)
@@ -88,6 +95,16 @@ const ParameterForm = ({ totalDots, setTotalDots, canvasHeight, setCanvasHeight,
             setSpeed(60)
             setColourChange(1)
             setSmooth(true)
+        }
+        else if (event.target.value === "meteor") {
+            setTotalDots(3500)
+            setBrushStrokeLength(100)
+            setDiameter(80)
+            setOpacity(85)
+            setDirectionBeforeChange(100)
+            setSpeed(0.1)
+            setColourChange(0.6)
+            setSmooth(false)
         }
         else if (event.target.value === "smoke") {
             setTotalDots(10000)
@@ -128,6 +145,16 @@ const ParameterForm = ({ totalDots, setTotalDots, canvasHeight, setCanvasHeight,
             setSpeed(1)
             setSmooth(true)
         }
+        else if (event.target.value === "undercoat") {
+            setTotalDots(1000)
+            setBrushStrokeLength(50)
+            setDiameter(150)
+            setOpacity(35)
+            setDirectionBeforeChange(2)
+            setSpeed(0.1)
+            setColourChange(0)
+            setSmooth(false)
+        }
         else if (event.target.value === "wallpaper") {
             setTotalDots(5000)
             setBrushStrokeLength(2)
@@ -139,64 +166,56 @@ const ParameterForm = ({ totalDots, setTotalDots, canvasHeight, setCanvasHeight,
             setSmooth(false)
         }
     }
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        let runAgain = [...run]
-        setRun([runAgain[0] + 1]);
-    }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form>
             <label>Total # of Dots:
                 <input onChange={handleTotalDotChange} min={1000} value={totalDots} type='number'></input>
             </label>
             <label>Brush Stroke Length:
                 <input onChange={handleBrushStrokeLengthChange} value={brushStrokeLength} type='number'></input>
             </label>
-            <label>Change Direction (px):
+            <label>Change Direction:
                 <input onChange={handleDirectionBeforeChange} min={1} value={directionBeforeChange} type='number'></input>
             </label>
-            <label>Diameter (px):
-                <input onChange={handleDiameterChange} value={diameter} type='number'></input>
+            <label>Dot diameter:
+                <input onChange={handleDiameterChange} value={diameter} min={1} max={200} type='range'></input>
             </label>
             <label>Opacity (%):
-                <input onChange={handleOpacityChange} min={0} max={100} value={opacity} type='number'></input>
+                <input onChange={handleOpacityChange} min={0} max={100} value={opacity} type='range'></input>
             </label>
-            {/* <label>Canvas Height (pixels):
-                    <input onChange={handleCanvasHeightChange} min={100} max={700} value={canvasHeight} type='number'></input>
-                </label>
-                <label>Canvas Width (pixels):
-                    <input onChange={handleCanvasWidthChange} min={100} max={1450} value={canvasWidth} type='number'></input>
-                </label> */}
             <label>Rate of colour change:
-                <input onChange={handleColourChange} min={0.1} max={5} value={colourChange} type='number' step={0.1}></input>
+                <input onChange={handleColourChange} min={0.1} max={5} value={colourChange} type='range' step={0.1}></input>
             </label>
             <label>Interval between dot generation:
-                <input onChange={handleSpeedChange} min={0.1} max={100} value={speed} type='number' step={0.1}></input>
+                <input onChange={handleSpeedChange} min={0.1} max={100} value={speed} type='range' step={0.1}></input>
             </label>
             <fieldset onChange={handleSmoothChange}>
-                <legend>Smooth direction changes?</legend>
-                <label>True:
+                <legend>Smooth direction change:</legend>
+                <label>Yes:
                     <input value={true} checked={smooth === true} type='radio'></input>
                 </label>
-                <label>False:
+                <label>No:
                     <input value={false} checked={smooth === false} type='radio'></input>
                 </label>
             </fieldset>
-            <label>Presets:
+            <label>Preset:
                 <select onChange={handlePresetChange} value={preset}>
                     <option value="classic">Classic</option>
                     <option value="rainbow">Crawling Rainbow</option>
                     <option value="droplets">Droplets</option>
                     <option value="ghost">Ghost Train</option>
+                    <option value="meteor">Meteor Shower</option>
+                    <option value="cover">Monochrome Undercoat</option>
                     <option value="smoke">Smokescreen</option>
                     <option value="squiggle">Squiggles</option>
                     <option value="tartan">Tartan</option>
                     <option value="tiny">Tiny Snake</option>
-                    <option value="wallpaper">70's Wallpaper</option>
+                    <option value="wallpaper">70s Wallpaper</option>
                 </select>
             </label>
-            <input type="submit" value="ART!" />
+            <input onClick={handleStartButton} id="start-button" type="button" value="stART"/>
+            <input onClick={handleStopButton} id="stop-button" type="button" value="stop"/>
         </form>
     );
 };
