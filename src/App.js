@@ -173,7 +173,7 @@ function App() {
     context.fillStyle = `hsl(${dot.hue} ${dot.saturation}% ${dot.lightness}% / ${dot.opacity}%)`
     context.fill(blob)
 
-    if ((dot.dotNumber * speed) % 1000 === 0 || dot.dotNumber === 0) {
+    if (dot.dotNumber % Math.round(1000 / speed) === 0 || dot.dotNumber === 0) {
       setLogoStyle(`hsl(${dot.hue} ${dot.saturation}% ${dot.lightness}% / 85%)`)
     }
 
