@@ -171,10 +171,10 @@ const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStr
             <label>Total # of Dots:
                 <input onChange={handleTotalDotChange} min={1000} value={totalDots} type='number'></input>
             </label>
-            <label>Brush Stroke Length:
+            <label>Dots chained together:
                 <input onChange={handleBrushStrokeLengthChange} value={brushStrokeLength} type='number'></input>
             </label>
-            <label>Change Direction:
+            <label>Dots before direction change:
                 <input onChange={handleDirectionBeforeChange} min={1} value={directionBeforeChange} type='number'></input>
             </label>
             <label>Dot diameter:
