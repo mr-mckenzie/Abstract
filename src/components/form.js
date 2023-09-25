@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStrokeLength, diameter, setDiameter, directionBeforeChange, setDirectionBeforeChange, opacity, setOpacity, speed, setSpeed, colourChange, setColourChange, smooth, setSmooth, run, setRun }) => {
+const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStrokeLength, diameter, setDiameter, directionBeforeChange, setDirectionBeforeChange, opacity, setOpacity, speed, setSpeed, colourChange, setColourChange, smooth, setSmooth, scroll, setScroll, run, setRun }) => {
 
     const [preset, setPreset] = useState("classic")
 
@@ -39,6 +39,13 @@ const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStr
             setSmooth(false)
         }
     }
+    const handleScrollChange = (event) => {
+        if (event.target.value === "true") {
+            setScroll(true)
+        } else if (event.target.value === "false") {
+            setScroll(false)
+        }
+    }
     const handleStartButton = (event) => {
         if (run != true) {
             setRun(true)
@@ -60,6 +67,7 @@ const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStr
             setSpeed(15)
             setColourChange(1)
             setSmooth(true)
+            setScroll(true)
         }
         else if (event.target.value === "droplets") {
             setTotalDots(3000)
@@ -70,6 +78,7 @@ const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStr
             setSpeed(5)
             setColourChange(0.5)
             setSmooth(false)
+            setScroll(true)
         }
         else if (event.target.value === "rainbow") {
             setTotalDots(100000)
@@ -80,26 +89,29 @@ const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStr
             setSpeed(50)
             setColourChange(5)
             setSmooth(true)
+            setScroll(false)
         }
-        else if (event.target.value === "ghost") {
+        else if (event.target.value === "glyph") {
             setTotalDots(10000)
-            setBrushStrokeLength(1000)
-            setDiameter(20)
-            setOpacity(7)
-            setDirectionBeforeChange(6)
-            setSpeed(60)
-            setColourChange(1)
-            setSmooth(true)
+            setBrushStrokeLength(500)
+            setDiameter(1)
+            setOpacity(100)
+            setDirectionBeforeChange(50)
+            setSpeed(5)
+            setColourChange(0.2)
+            setSmooth(false)
+            setScroll(false)
         }
         else if (event.target.value === "meteor") {
             setTotalDots(3500)
-            setBrushStrokeLength(100)
-            setDiameter(80)
+            setBrushStrokeLength(30)
+            setDiameter(20)
             setOpacity(85)
             setDirectionBeforeChange(0)
             setSpeed(0.1)
             setColourChange(0.6)
             setSmooth(false)
+            setScroll(true)
         }
         else if (event.target.value === "smoke") {
             setTotalDots(10000)
@@ -110,6 +122,7 @@ const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStr
             setSpeed(3)
             setColourChange(2)
             setSmooth(false)
+            setScroll(true)
         }
         else if (event.target.value === "squiggle") {
             setTotalDots(75000)
@@ -120,16 +133,18 @@ const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStr
             setSpeed(7)
             setColourChange(0.5)
             setSmooth(false)
+            setScroll(false)
         }
         else if (event.target.value === "tartan") {
-            setTotalDots(2000)
-            setBrushStrokeLength(2000)
-            setDiameter(30)
-            setOpacity(100)
-            setDirectionBeforeChange(100)
-            setSpeed(5)
-            setColourChange(2)
+            setTotalDots(10000)
+            setBrushStrokeLength(500)
+            setDiameter(20)
+            setOpacity(7)
+            setDirectionBeforeChange(0)
+            setSpeed(1)
+            setColourChange(1)
             setSmooth(false)
+            setScroll(false)
         }
         else if (event.target.value === "tiny") {
             setTotalDots(30000)
@@ -139,6 +154,7 @@ const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStr
             setDirectionBeforeChange(3)
             setSpeed(1)
             setSmooth(true)
+            setScroll(false)
         }
         else if (event.target.value === "undercoat") {
             setTotalDots(1000)
@@ -149,6 +165,7 @@ const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStr
             setSpeed(0.1)
             setColourChange(0)
             setSmooth(false)
+            setScroll(true)
         }
         else if (event.target.value === "wallpaper") {
             setTotalDots(5000)
@@ -159,6 +176,7 @@ const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStr
             setSpeed(2)
             setColourChange(4)
             setSmooth(false)
+            setScroll(true)
         }
     }
 
@@ -168,6 +186,21 @@ const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStr
 
     return (
         <form onSubmit={handleSubmit}>
+            <label>Preset:
+                <select onChange={handlePresetChange} value={preset}>
+                    <option value="classic">Classic</option>
+                    <option value="rainbow">Crawling Rainbow</option>
+                    <option value="droplets">Droplets</option>
+                    <option value="glyph">Glyphs</option>
+                    <option value="meteor">Meteor Shower</option>
+                    <option value="smoke">Smokescreen</option>
+                    <option value="squiggle">Squiggles</option>
+                    <option value="tartan">Tartan</option>
+                    <option value="tiny">Tiny Snake</option>
+                    <option value="undercoat">Undercoat</option>
+                    <option value="wallpaper">70s Wallpaper</option>
+                </select>
+            </label>
             <label>Total # of Dots:
                 <input onChange={handleTotalDotChange} min={1000} value={totalDots} type='number'></input>
             </label>
@@ -198,23 +231,19 @@ const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStr
                     <input value={false} checked={smooth === false} type='radio'></input>
                 </label>
             </fieldset>
-            <label>Preset:
-                <select onChange={handlePresetChange} value={preset}>
-                    <option value="classic">Classic</option>
-                    <option value="rainbow">Crawling Rainbow</option>
-                    <option value="droplets">Droplets</option>
-                    <option value="ghost">Ghost Train</option>
-                    <option value="meteor">Meteor Shower</option>
-                    <option value="smoke">Smokescreen</option>
-                    <option value="squiggle">Squiggles</option>
-                    <option value="tartan">Tartan</option>
-                    <option value="tiny">Tiny Snake</option>
-                    <option value="undercoat">Undercoat</option>
-                    <option value="wallpaper">70s Wallpaper</option>
-                </select>
-            </label>
-            <input onClick={handleStartButton} id="start-button" type="button" value="stART"/>
-            <input onClick={handleStopButton} id="stop-button" type="button" value="stop"/>
+            <fieldset onChange={handleScrollChange}>
+                <legend>Edge Behaviour:</legend>
+                <label>Scroll:
+                    <input value={true} checked={scroll === true} type='radio'></input>
+                </label>
+                <label>Bounce:
+                    <input value={false} checked={scroll === false} type='radio'></input>
+                </label>
+            </fieldset>
+            <div id="button-box">
+                <input onClick={handleStartButton} id="start-button" type="button" value="stART" />
+                <input onClick={handleStopButton} id="stop-button" type="button" value="stop" />
+            </div>
         </form>
     );
 };
