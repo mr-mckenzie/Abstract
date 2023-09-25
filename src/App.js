@@ -16,6 +16,7 @@ function App() {
   const [smooth, setSmooth] = useState(true)
   const [run, setRun] = useState(true)
   const [logoStyle, setLogoStyle] = useState("aquamarine")
+  const [scroll, setScroll] = useState(true)
 
   // A random starting hue
   let maxHue = Math.floor(Math.random() * 360)
@@ -31,12 +32,9 @@ function App() {
   let canvasHeight = 600
   let canvasWidth = 800
 
-  const minTop = 0
-  const minLeft = 0
-
   let dotCount = 0
-  let top
-  let left
+  let xAxis = 0
+  let yAxis = 0
 
   let randomDirection = Math.floor(Math.random() * 8)
 
@@ -45,74 +43,80 @@ function App() {
     if (run === true || run === "restart") {
 
       const interval = setInterval(() => {
-
         if (dotCount % directionBeforeChange === 0) {
           if (smooth === true) {
-            if (randomDirection === 0) {
-              randomDirection = [7, randomDirection, randomDirection+1][Math.floor(Math.random() * 3)]
-            } else if (randomDirection === 7) {
-              randomDirection = [randomDirection-1, randomDirection, 0][Math.floor(Math.random() * 3)]
-            } else {
-              randomDirection = [randomDirection-1, randomDirection, randomDirection+1][Math.floor(Math.random() * 3)]
-          } 
-        } else {
+            randomDirection = [(randomDirection + 7) % 8, randomDirection, (randomDirection + 1) % 8][Math.floor(Math.random() * 3)]
+          } else {
             randomDirection = Math.floor(Math.random() * 8)
           }
-        }
-
-        if (dotCount % brushStrokeLength === 0) {
-
-          top = Math.floor(Math.random() * canvasHeight)
-          left = Math.floor(Math.random() * canvasWidth)
-
-          //TODO add in transition to fade colours
         }
 
         let min = Math.ceil(diameter - diameter / 5);
         let max = Math.floor(diameter);
         let randomDiameter = Math.floor((Math.random() * (max - min)) + min)
 
-        if (randomDirection === 0) {
-          // up
-          top = top - randomDiameter / 3
-        } else if (randomDirection === 1) {
-          // up and right
-          top = top - randomDiameter / 3
-          left = left + randomDiameter / 3
-        } else if (randomDirection === 2) {
-          // right
-          left = left + randomDiameter / 3
-        } else if (randomDirection === 3) {
-          // down and right
-          top = top + randomDiameter / 3
-          left = left + randomDiameter / 3
-        } else if (randomDirection === 4) {
-          // down
-          top = top + randomDiameter / 3
-        } else if (randomDirection === 5) {
-          // down and left
-          top = top + randomDiameter / 3
-          left = left - randomDiameter / 3
-        } else if (randomDirection === 6) {
-          // left
-          left = left - randomDiameter / 3
+        let directionChange = [
+          //right
+          { xAxis: xAxis + randomDiameter / 3,
+            yAxis: yAxis },
+          //up and right
+          { xAxis: xAxis + randomDiameter / 3,
+            yAxis: yAxis + randomDiameter / 3 },
+          //up
+          { xAxis: xAxis,
+            yAxis: yAxis + randomDiameter / 3 },
+          //up and left
+          { xAxis: xAxis - randomDiameter / 3,
+            yAxis: yAxis + randomDiameter / 3 },
+          //left
+          { xAxis: xAxis - randomDiameter / 3,
+            yAxis: yAxis },
+          //down and left
+          { xAxis: xAxis - randomDiameter / 3,
+            yAxis: yAxis - randomDiameter / 3 },
+          //down
+          { xAxis: xAxis,
+            yAxis: yAxis - randomDiameter / 3 },
+          //down and right
+          { xAxis: xAxis + randomDiameter / 3,
+            yAxis: yAxis - randomDiameter / 3 },
+        ]
+
+        if (dotCount % brushStrokeLength === 0) {
+          xAxis = Math.floor(Math.random() * canvasWidth)
+          yAxis = Math.floor(Math.random() * canvasHeight)
         } else {
-          // up and left
-          top = top - randomDiameter / 3
-          left = left - randomDiameter / 3
+          xAxis = directionChange[randomDirection].xAxis
+          yAxis = directionChange[randomDirection].yAxis
         }
 
-        if (top >= canvasHeight) {
-          top = 1
-        }
-        if (top <= minTop) {
-          top = canvasHeight
-        }
-        if (left >= canvasWidth) {
-          left = 1
-        }
-        if (left <= minLeft) {
-          left = canvasWidth
+        let oppositeX = ((12 - randomDirection) % 8)
+        let oppositeY = ((8 - randomDirection) % 8)
+
+        if (scroll == true) {
+          if (yAxis > canvasHeight) {
+            yAxis = 0
+          }
+          if (yAxis < 0) {
+            yAxis = canvasHeight
+          }
+          if (xAxis > canvasWidth) {
+            xAxis = 0
+          }
+          if (xAxis < 0) {
+            xAxis = canvasWidth
+          }
+        } else if (scroll == false) {
+          if (yAxis > canvasHeight || yAxis < 0) {
+            randomDirection = oppositeY
+            xAxis = directionChange[randomDirection].xAxis
+            yAxis = directionChange[randomDirection].yAxis
+          }
+          if (xAxis > canvasWidth || xAxis < 0) {
+            randomDirection = oppositeX
+            xAxis = directionChange[randomDirection].xAxis
+            yAxis = directionChange[randomDirection].yAxis
+          }
         }
 
         const randomMaxHue = Math.floor(maxHue)
@@ -132,7 +136,7 @@ function App() {
           minHue = minHue - colourChange
         }
 
-        setDot({ index: dotCount, hue: randomHue, saturation: randomSaturation, lightness: randomlightness, top: top, left: left, diameter: randomDiameter, opacity: opacity, dotNumber: dotCount })
+        setDot({ dotNumber: dotCount, hue: randomHue, saturation: randomSaturation, lightness: randomlightness, xAxis: xAxis, yAxis: yAxis, diameter: randomDiameter, opacity: opacity })
 
         //add to dot count
         dotCount++
@@ -154,22 +158,19 @@ function App() {
 
   useEffect(() => {
     if (run !== false) {
-      //set canvas background to white
-      canvas = document.getElementById('dotCanvas')   // access the canvas object
-      context = canvas.getContext('2d')                // set context to 2d
-      context.fillStyle = 'whitesmoke'
-      context.fillRect(0, 0, canvasWidth, canvasHeight)
+      canvas = document.getElementById('dotCanvas')     // access the canvas object
+      context = canvas.getContext('2d')                 // set context to 2d
+      context.fillStyle = 'whitesmoke'                
+      context.fillRect(0, 0, canvasWidth, canvasHeight) // set canvas background to whitesmoke
     }
   }, [run])
 
   useEffect(() => {
-    canvas = document.getElementById('dotCanvas')   // access the canvas object
-    context = canvas.getContext('2d')                // set context to 2d
+    canvas = document.getElementById('dotCanvas')
+    context = canvas.getContext('2d')
 
     let blob = new Path2D();
-    //TO DO - make it that dot is centred on the line and does not generate with overhang below or to right
-    blob.roundRect(dot.left - (dot.diameter / 2), dot.top - (dot.diameter / 2), dot.diameter, dot.diameter, dot.diameter / 5)
-
+    blob.roundRect(dot.xAxis - (dot.diameter / 2), dot.yAxis - (dot.diameter / 2), dot.diameter, dot.diameter, dot.diameter / 5)
     context.fillStyle = `hsl(${dot.hue} ${dot.saturation}% ${dot.lightness}% / ${dot.opacity}%)`
     context.fill(blob)
 
@@ -189,7 +190,7 @@ function App() {
         <canvas id="dotCanvas" width={canvasWidth} height={canvasHeight}>
           Please upgrade your browser
         </canvas>
-        <ParameterForm totalDots={totalDots} setTotalDots={setTotalDots} brushStrokeLength={brushStrokeLength} setBrushStrokeLength={setBrushStrokeLength} diameter={diameter} setDiameter={setDiameter} directionBeforeChange={directionBeforeChange} setDirectionBeforeChange={setDirectionBeforeChange} opacity={opacity} setOpacity={setOpacity} speed={speed} setSpeed={setSpeed} colourChange={colourChange} setColourChange={setColourChange} smooth={smooth} setSmooth={setSmooth} run={run} setRun={setRun} />
+        <ParameterForm totalDots={totalDots} setTotalDots={setTotalDots} brushStrokeLength={brushStrokeLength} setBrushStrokeLength={setBrushStrokeLength} diameter={diameter} setDiameter={setDiameter} directionBeforeChange={directionBeforeChange} setDirectionBeforeChange={setDirectionBeforeChange} opacity={opacity} setOpacity={setOpacity} speed={speed} setSpeed={setSpeed} colourChange={colourChange} setColourChange={setColourChange} smooth={smooth} setSmooth={setSmooth} scroll={scroll} setScroll={setScroll} run={run} setRun={setRun} />
       </div>
     </div>
   );
