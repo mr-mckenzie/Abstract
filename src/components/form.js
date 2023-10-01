@@ -70,7 +70,7 @@ const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStr
             setScroll(true)
         }
         else if (event.target.value === "droplets") {
-            setTotalDots(3000)
+            setTotalDots(7500)
             setBrushStrokeLength(1)
             setDiameter(20)
             setOpacity(85)
@@ -186,7 +186,12 @@ const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStr
 
     return (
         <form onSubmit={handleSubmit}>
-            <label>Preset:
+                        <div id="button-box">
+                <input onClick={handleStartButton} id="start-button" type="button" value="start" />
+                <input onClick={handleStopButton} id="stop-button" type="button" value="stop" />
+            </div>
+            <h2>Basic settings</h2>
+            <label>Mode:
                 <select onChange={handlePresetChange} value={preset}>
                     <option value="classic">Classic</option>
                     <option value="rainbow">Crawling Rainbow</option>
@@ -201,6 +206,7 @@ const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStr
                     <option value="wallpaper">70s Wallpaper</option>
                 </select>
             </label>
+            <h2>Advanced settings</h2>
             <label>Total # of Dots:
                 <input onChange={handleTotalDotChange} min={1000} value={totalDots} type='number'></input>
             </label>
@@ -222,7 +228,7 @@ const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStr
             <label>Interval between dot generation:
                 <input onChange={handleSpeedChange} min={0.1} max={100} value={speed} type='range' step={0.1}></input>
             </label>
-            <fieldset onChange={handleSmoothChange}>
+            <fieldset onChange={handleSmoothChange} tabIndex={0}>
                 <legend>Smooth direction change:</legend>
                 <label>Yes:
                     <input value={true} checked={smooth === true} type='radio'></input>
@@ -231,7 +237,7 @@ const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStr
                     <input value={false} checked={smooth === false} type='radio'></input>
                 </label>
             </fieldset>
-            <fieldset onChange={handleScrollChange}>
+            <fieldset onChange={handleScrollChange} tabIndex={0}>
                 <legend>Edge Behaviour:</legend>
                 <label>Scroll:
                     <input value={true} checked={scroll === true} type='radio'></input>
@@ -240,10 +246,6 @@ const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStr
                     <input value={false} checked={scroll === false} type='radio'></input>
                 </label>
             </fieldset>
-            <div id="button-box">
-                <input onClick={handleStartButton} id="start-button" type="button" value="stART" />
-                <input onClick={handleStopButton} id="stop-button" type="button" value="stop" />
-            </div>
         </form>
     );
 };

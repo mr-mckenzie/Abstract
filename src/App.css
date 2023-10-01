@@ -1,6 +1,6 @@
 html,
 input,
-option {
+option, select {
   font-family: 'Courier New', Courier, monospace;
 }
 
@@ -33,6 +33,7 @@ form {
   justify-content: space-around;
   align-items: center;
   width: max-content;
+  height: 42rem
 }
 
 label {
@@ -57,7 +58,23 @@ input {
 
 #start-button,
 #stop-button {
-  width: 45%;
+  width: 10rem;
+  height: 2.5rem;
+  border-radius: 5rem;
+  background-color: dodgerblue;
+color: white;
+font-size: 1.5rem;
+}
+
+#start-button:hover,
+#stop-button:hover {
+  background-color:skyblue;
+}
+
+#start-button:focus,
+#stop-button:focus {
+  background-color:skyblue;
+  outline: 2px dotted grey;
 }
 
 @media screen and (max-width:1110px) {
