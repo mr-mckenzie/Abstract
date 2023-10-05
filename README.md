@@ -1,70 +1,47 @@
-# Getting Started with Create React App
+# Abstract
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Create abstract images in real-time with randomly generated coloured dots.
 
-## Available Scripts
+![A screenshot of an image being generated with Abstract](./AbstractReadMe.jpeg)
 
-In the project directory, you can run:
+## Instructions
 
-### `npm start`
+Abstract is deployed online, please follow the link on GitHub to use Abstract.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Image generation will begin as soon as the app has loaded so just hit the link, sit back and enjoy.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+If you're feeling creative or curious you may wish to adjust the settings and find out what other things Abstract can do. If so, look no further than the **control panel**.
 
-### `npm test`
+### The Control Panel
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The control panel sits to the left of the canvas (or below if using Abstract in mobile mode) and contains various controls for interacting with the image generator.
 
-### `npm run build`
+* Start - press this button to start a new image.
+* Stop - press this button to stop image generation. 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+⚠️ **Warning** - pressing the stop button completely halts the image forever and there is no way to resume an image once stopped. ⚠️
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### Basic Settings
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* Mode - this menu allows you to select from a handful of different presets. It's a neat way of quickly exploring the capabilities of Abstract's image generating algorithm.
 
-### `npm run eject`
+#### Advanced Settings
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Not for the faint of heart!
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+* Total # of Dots - This is how many individual dots will be generated on the canvas. The more dots, the longer the image genreration.
+* Dots chained together - Abstract works by generating a starting dot in a random position on the canvas. Each new dot is placed next to the previous one and these chained dots form a virtual brushstroke. The number of dots chained together represents the length of a brushstroke. Upon reaching the end of a brushstroke a new starter dot is generated.
+* Dots before direction change - After every few dots, the direction of the brushstroke will change, use this setting to alter how often the direction changes.
+* Dot diameter - How large or small the dots are.
+* Opacity - How see-through the dots are (Go left for more see-through and right for more solid)
+* Rate of colour change - Adjust how often the dots change colour (left is none and right is frequently)
+* Interval between dot generation - How quickly a new dot is added to the image (go left for speedy and right for slow).
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+⚠️ **Warning** - Abstract experiences reduced performance on mobile devices so image generation tends to be on the sluggish side. You may not notice much/any difference when lowering the generation interval. ⚠️
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* Smooth direction change - 
+    * Yes - This will ensure that direction change are limited to a smaller angle with no jerky movement.
+    * No - all bets are off and the brushstroke can choose any direction (even backwards!).
+* Edge Behaivior - 
+    * Scroll - When a brushstroke reaches the edge of the canvas it will reappear on the opposite side.
+    * Bounce - When a brushstroke reaches the edge of the canvas it will be bounced back in the opposite direction.
