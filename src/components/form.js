@@ -56,127 +56,53 @@ const ParameterForm = ({ totalDots, setTotalDots, brushStrokeLength, setBrushStr
     const handleStopButton = (event) => {
         setRun(false)
     }
+
+    const updatePreset = (totalDots, brushStrokeLength, diameter, opacity, directionBeforeChange, speed, colourChange, smoothBoolean, scrollBoolean) => {
+        setTotalDots(totalDots)
+        setBrushStrokeLength(brushStrokeLength)
+        setDiameter(diameter)
+        setOpacity(opacity)
+        setDirectionBeforeChange(directionBeforeChange)
+        setSpeed(speed)
+        setColourChange(colourChange)
+        setSmooth(smoothBoolean)
+        setScroll(scrollBoolean)
+    }
+
     const handlePresetChange = (event) => {
         setPreset(event.target.value)
         if (event.target.value === "classic") {
-            setTotalDots(15000)
-            setBrushStrokeLength(200)
-            setDiameter(30)
-            setOpacity(85)
-            setDirectionBeforeChange(1)
-            setSpeed(15)
-            setColourChange(1)
-            setSmooth(true)
-            setScroll(true)
+            updatePreset(15000, 200, 30, 85, 1, 15, 1, true, true)
         }
         else if (event.target.value === "droplets") {
-            setTotalDots(7500)
-            setBrushStrokeLength(1)
-            setDiameter(20)
-            setOpacity(85)
-            setDirectionBeforeChange(1)
-            setSpeed(5)
-            setColourChange(0.5)
-            setSmooth(false)
-            setScroll(true)
+            updatePreset(7500, 1, 20, 85, 1, 5, 0.5, false, true)
         }
         else if (event.target.value === "rainbow") {
-            setTotalDots(100000)
-            setBrushStrokeLength(100000)
-            setDiameter(30)
-            setOpacity(70)
-            setDirectionBeforeChange(3)
-            setSpeed(50)
-            setColourChange(5)
-            setSmooth(true)
-            setScroll(false)
+            updatePreset(100000, 100000, 30, 70, 3, 50, 5, true, false)
         }
         else if (event.target.value === "glyph") {
-            setTotalDots(10000)
-            setBrushStrokeLength(500)
-            setDiameter(1)
-            setOpacity(100)
-            setDirectionBeforeChange(50)
-            setSpeed(5)
-            setColourChange(0.2)
-            setSmooth(false)
-            setScroll(false)
+            updatePreset(10000, 500, 1, 100, 50, 5, 0.2, false, false)
         }
         else if (event.target.value === "meteor") {
-            setTotalDots(3500)
-            setBrushStrokeLength(30)
-            setDiameter(20)
-            setOpacity(85)
-            setDirectionBeforeChange(0)
-            setSpeed(0.1)
-            setColourChange(0.6)
-            setSmooth(false)
-            setScroll(true)
+            updatePreset(3500, 30, 20, 85, 0, 0.1, 0.6, false, true)
         }
         else if (event.target.value === "smoke") {
-            setTotalDots(10000)
-            setBrushStrokeLength(5)
-            setDiameter(200)
-            setOpacity(1)
-            setDirectionBeforeChange(3)
-            setSpeed(3)
-            setColourChange(2)
-            setSmooth(false)
-            setScroll(true)
+            updatePreset(10000, 5, 200, 1, 3, 3, 2, false, true)
         }
         else if (event.target.value === "squiggle") {
-            setTotalDots(75000)
-            setBrushStrokeLength(75)
-            setDiameter(15)
-            setOpacity(75)
-            setDirectionBeforeChange(1)
-            setSpeed(7)
-            setColourChange(0.5)
-            setSmooth(false)
-            setScroll(false)
+            updatePreset(75000, 75, 15, 75, 1, 7, 0.5, false, false)
         }
         else if (event.target.value === "tartan") {
-            setTotalDots(10000)
-            setBrushStrokeLength(500)
-            setDiameter(20)
-            setOpacity(7)
-            setDirectionBeforeChange(0)
-            setSpeed(1)
-            setColourChange(1)
-            setSmooth(false)
-            setScroll(false)
+            updatePreset(10000, 500, 20, 7, 0, 1, 1, false, false)
         }
         else if (event.target.value === "tiny") {
-            setTotalDots(30000)
-            setBrushStrokeLength(30000)
-            setDiameter(2)
-            setOpacity(85)
-            setDirectionBeforeChange(3)
-            setSpeed(1)
-            setSmooth(true)
-            setScroll(false)
+            updatePreset(30000, 30000, 2, 85, 3, 1, true, false)
         }
         else if (event.target.value === "undercoat") {
-            setTotalDots(1000)
-            setBrushStrokeLength(50)
-            setDiameter(150)
-            setOpacity(35)
-            setDirectionBeforeChange(2)
-            setSpeed(0.1)
-            setColourChange(0)
-            setSmooth(false)
-            setScroll(true)
+            updatePreset(1000, 50, 150, 35, 2, 0.1, 0, false, true)
         }
         else if (event.target.value === "wallpaper") {
-            setTotalDots(5000)
-            setBrushStrokeLength(2)
-            setDiameter(100)
-            setOpacity(100)
-            setDirectionBeforeChange(2)
-            setSpeed(2)
-            setColourChange(4)
-            setSmooth(false)
-            setScroll(true)
+            updatePreset(5000, 2, 100, 100, 2, 2, 4, false, true)
         }
     }
 
