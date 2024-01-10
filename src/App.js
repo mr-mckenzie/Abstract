@@ -29,8 +29,8 @@ function App() {
   const randomMinlight = Math.ceil(minLight)
   const randomlightness = Math.floor(Math.random() * (randomMaxlight - randomMinlight) + randomMinlight)
 
-  let canvasHeight = 600
-  let canvasWidth = 800
+  const canvasHeight = 600
+  const canvasWidth = 800
 
   let dotCount = 0
   let xAxis = 0
@@ -51,9 +51,9 @@ function App() {
           }
         }
 
-        let min = Math.ceil(diameter - diameter / 5);
-        let max = Math.floor(diameter);
-        let randomDiameter = Math.floor((Math.random() * (max - min)) + min)
+        let minDiameter = Math.ceil(diameter - diameter / 5);
+        let maxDiameter = Math.floor(diameter);
+        let randomDiameter = Math.floor((Math.random() * (maxDiameter - minDiameter)) + minDiameter)
 
         let directionChange = [
           //right
